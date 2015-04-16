@@ -9,22 +9,20 @@ markdown: kramdown
 
 # The title and tagline is showed on homepage
 #
-title :  Simpleyyt 
-tagline: Yitao's Blog
+title :  Adventure in Coding 
+tagline: Flight's Blog
 
 # Information about author
 #
 author :
-  name : Yitao Yao
+  name : Flight Tong
   
 # Information for contacts showed at on the footer
 #
 contact :
-  e-mail : mailto:simpleyyt@gmail.com
-  Github : https://github.com/Simpleyyt
-  WeiBo : http://www.weibo.com/u/1836017133
-  Google+ : https://plus.google.com/103860633659538888207?rel=author
-  
+  e-mail : tongfei1017@gmail.com
+  Github : https://github.com/flight2006
+
 # Links showed on the footer
 #
 links :
