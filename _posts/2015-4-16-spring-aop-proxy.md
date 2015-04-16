@@ -36,7 +36,7 @@ JDK的动态代理主要涉及到java.lang.reflect包中的两个Proxy和Invocat
 			}
 		}
 	}
-	
+
 假设在业务逻辑中需要加入性能监控代码，监控代码PerformanceHandler代码如下
 
 	package cn.hdu.proxy;
@@ -96,3 +96,18 @@ begin和end方法为性能监控的横切代码，method.invoke()方法通过jav
 
 #CGLib动态代理
 JDK动态代理的一个限制为，只能为接口创建代理实例，而CGlib可以弥补这个缺陷，CGLib采用字节码技术，可以为一个类创建子类，并在子类采用方法拦截的技术拦截所有方法的调用，并顺势织入横切逻辑。下面是一个可以为任何类创建织入性能监视横切逻辑代理对象的代理器：
+
+	public class CglibProxy implements MethodInterceptor(){
+		private Enhancer enhancer = new Enhancer();
+		public Object getProxy(Class clazz){
+			enhancer.setSuperclass(clazz);
+			enhancer.setCallback(this);
+			return enhancer.create();
+		}
+		public Object intercept(Object obj,Method method,Object[] args,MethodProxy proxy) throws Throwable{
+			PerformanceMonitor.begin(obj.getClass().getName()+'.'+method.getName());
+			Object result = proxy.invokeSuper(obj,args);
+			PerformanceMonitor.end();
+			return result;
+		}
+	}
