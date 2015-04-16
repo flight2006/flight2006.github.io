@@ -36,7 +36,9 @@ JDK的动态代理主要涉及到java.lang.reflect包中的两个Proxy和Invocat
 			}
 		}
 	}
+	
 假设在业务逻辑中需要加入性能监控代码，监控代码PerformanceHandler代码如下
+
 	package cn.hdu.proxy;
 	import java.lang.reflect.InvocationHandler;
 	import java.lang.reflect.Method;
@@ -55,11 +57,12 @@ JDK的动态代理主要涉及到java.lang.reflect包中的两个Proxy和Invocat
 			PerformanceMonitor.end();
 			return obj;
 		}
-
 	}
+
 begin和end方法为性能监控的横切代码，method.invoke()方法通过java反射机制间接调用目标对象的方法，这样InvocationHandler的invoke()方法就将横切逻辑代码和业务类方法的逻辑代码编织在一起了。
 其中invoke(Object proxy, Method method, Object[] args)方法中，proxy是最终生成的代理实例；method是被代理目标实例的某个具体方法，args是通过被代理实例某个方法的参数。在构造函数中通过target传入希望被代理的目标对象,并将该实例传给method.invoke()方法。
 下面通过Proxy结合PerformanceHandler创建ForumService接口的代理实例：
+
 	package cn.hdu.proxy;
 	import java.lang.reflect.Proxy;
 
@@ -77,8 +80,10 @@ begin和end方法为性能监控的横切代码，method.invoke()方法通过jav
 		}
 
 	}
+
 上面代码完成业务逻辑代码和横切代码的编织工作并生成了代理实例。②处将目标业务类和横切代码编织在一起，③处根据编织完成后的InvocationHandler实例创建实例，该方法第一个参数为目标类加载器，第二个是创建实例所需要实现的一组接口，第三个是编织器对象。
 输出信息如下：
+
 	begin monitor...
 	模拟删除forum记录:10
 	end monitor
