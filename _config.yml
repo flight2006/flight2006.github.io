@@ -34,9 +34,9 @@ search :
   provider : gcse
   
   # Your Google custom search engine ID
-  #
+  #cx : 008814119901904627567:lofj0wx4we4
   gcse :
-    cx : 008814119901904627567:lofj0wx4we4
+    cx : 004255214185073801838:_icnlls8kds
   
 # The way of excerpt. There are two options: "teaser" and "truncate_words".
 # "teaser" option: look for the More tag (<!--more-->) and create a teaser from the content that precedes the More tag.
