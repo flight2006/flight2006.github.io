@@ -59,11 +59,10 @@ JDK的动态代理主要涉及到java.lang.reflect包中的两个Proxy和Invocat
 		}
 	}
 
-    begin和end方法为性能监控的横切代码，method.invoke()方法通过java反射机制间接调用目标对象的方法，这样InvocationHandler的invoke()
+begin和end方法为性能监控的横切代码，method.invoke()方法通过java反射机制间接调用目标对象的方法，这样InvocationHandler的invoke()
 方法就将横切逻辑代码和业务类方法的逻辑代码编织在一起了。
 
-    其中invoke(Object proxy, Method method, Object[] args)
-方法中，proxy是最终生成的代理实例；method是被代理目标实例的某个具体方法，args是通过被代理实例某个方
+其中invoke(Object proxy, Method method, Object[] args)方法中，proxy是最终生成的代理实例；method是被代理目标实例的某个具体方法，args是通过被代理实例某个方
 法的参数。在构造函数中通过target传入希望被代理的目标对象,并将该实例传给method.invoke()方法。
 下面通过Proxy结合PerformanceHandler创建ForumService接口的代理实例：
 
@@ -122,13 +121,13 @@ JDK动态代理的一个限制为，只能为接口创建代理实例，而CGLib
 用户可以通过getProxy(Class clazz)为一个类创建动态代理对象，该代理对象通过扩展class创建代理对象。interceptor方法是CGLib定义的Interceptor接口的方法，它拦截所有目标类方法的调用，obj表示目标类的实例；method为目标类方法的反射对象；args为方法的动态入参；proxy为代理类实例。
 下面代码创建代理对象，并测试代理对象的方法：
 
-public class TestForumService(String[] args){
-	CglibProxy proxy = new CglibProxy();
-	ForumServiceImpl forumService =
-						(ForumServiceImpl)proxy.getProxy(ForumServiceImpl.class);
-	forumService.removeForum(10);
-	forumService.removeTopic(1023);
-}
+	public class TestForumService(String[] args){
+		CglibProxy proxy = new CglibProxy();
+		ForumServiceImpl forumService =
+							(ForumServiceImpl)proxy.getProxy(ForumServiceImpl.class);
+		forumService.removeForum(10);
+		forumService.removeTopic(1023);
+	}
 
 通过CglibProxy为ForumServiceImpl动态创建了一个织入性能监视逻辑的代理对象，并调用代理类的业务方法。运行结果如下
 
