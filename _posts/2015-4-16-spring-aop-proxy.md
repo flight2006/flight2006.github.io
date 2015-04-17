@@ -5,7 +5,7 @@ title: spring学习笔记之aop动态代理
 tagline: by flight
 tags: spring aop
 ---
-Spring AOP基础——动态代理
+Spring AOP基础——动态代理,Spring AOP使用动态代理技术在运行期织入增强的代码，为了揭示Spring AOP底层的工作机理，有必要对涉及到的Java动态代理知识进行学习。Spring AOP底层使用两种代理机制：一种是基于JDK的动态代理；另一种是基于CGLib的动态代理。之所以需要两种代理机制，很大程度上是因为JDK本身只提供接口的代理，而不支持类的代理。
 
 <!--more-->
 
@@ -95,19 +95,50 @@ begin和end方法为性能监控的横切代码，method.invoke()方法通过jav
 
 
 #CGLib动态代理
-JDK动态代理的一个限制为，只能为接口创建代理实例，而CGlib可以弥补这个缺陷，CGLib采用字节码技术，可以为一个类创建子类，并在子类采用方法拦截的技术拦截所有方法的调用，并顺势织入横切逻辑。下面是一个可以为任何类创建织入性能监视横切逻辑代理对象的代理器：
+JDK动态代理的一个限制为，只能为接口创建代理实例，而CGLib可以弥补这个缺陷，CGLib采用字节码技术，可以为一个类创建子类，并在子类采用方法拦截的技术拦截所有方法的调用，并顺势织入横切逻辑。下面是一个可以为任何类创建织入性能监视横切逻辑代理对象的代理器：
 
-	public class CglibProxy implements MethodInterceptor(){
+	public class CglibProxy implements MethodInterceptor{
 		private Enhancer enhancer = new Enhancer();
 		public Object getProxy(Class clazz){
-			enhancer.setSuperclass(clazz);
-			enhancer.setCallback(this);
-			return enhancer.create();
+			enhancer.setSuperclass(clazz);   //①
+			enhancer.setCallback(this);		
+			return enhancer.create();		//②
 		}
-		public Object intercept(Object obj,Method method,Object[] args,MethodProxy proxy) throws Throwable{
+		public Object intercept(Object obj,Method method,Object[] args,MethodProxy proxy) throws Throwable{     //③
 			PerformanceMonitor.begin(obj.getClass().getName()+'.'+method.getName());
 			Object result = proxy.invokeSuper(obj,args);
 			PerformanceMonitor.end();
 			return result;
 		}
 	}
+
+①处设置需要创建子类的类
+②处通过字节码技术动态创建子类实例
+③处拦截弗雷所有方法的调用
+用户可以通过getProxy(Class clazz)为一个类创建动态代理对象，该代理对象通过扩展class创建代理对象。interceptor方法是CGLib定义的Interceptor接口的方法，它拦截所有目标类方法的调用，obj表示目标类的实例；method为目标类方法的反射对象；args为方法的动态入参；proxy为代理类实例。
+下面代码创建代理对象，并测试代理对象的方法：
+
+public class TestForumService(String[] args){
+	CglibProxy proxy = new CglibProxy();
+	ForumServiceImpl forumService =
+						(ForumServiceImpl)proxy.getProxy(ForumServiceImpl.class);
+	forumService.removeForum(10);
+	forumService.removeTopic(1023);
+}
+
+通过CglibProxy为ForumServiceImpl动态创建了一个织入性能监视逻辑的代理对象，并调用代理类的业务方法。运行结果如下
+
+	begin monitor...
+	模拟删除forum记录:10
+	end monitor
+	cn.hdu.proxy.ForumServiceImpl$$EnhancerByCGLIB$$44025b6d.removeForum花费52毫秒
+	begin monitor...
+	模拟删除topic记录:1023
+	end monitor
+	cn.hdu.proxy.ForumServiceImpl$$EnhancerByCGLIB$$44025b6d.removeTopic花费20毫秒
+
+上面结果显示代理类的名字是cn.hdu.proxy.ForumServiceImpl$$EnhancerByCGLIB$$44025b6d，这个类就是CGlib为ForumServiceImpl动态创建的子类。
+
+#总结
+动态代理实质上就是使用代理对象对被包装对象请求进行'拦截''增强'，然后用代理再转发给这些被包装对象，AOP就是基于该思想为目标Bean织入横切逻辑。Spring AOP通过Pointcut(切点)指定哪些类的哪些方法上织入横切逻辑，通过Advice(增强)描述横切逻辑和方法的具体植入点(方法前、方法后、方法的两端等)。此外，Spring通过Advisor(切面)将Pointcut和Advice两者组装起来。有了Advisor的信息，Spring就可以利用JDK或CGLib的动态代理技术采用同意的方式为目标Bean创建织入切面的代理对象了。
+
