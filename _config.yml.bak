@@ -26,7 +26,7 @@ contact :
 # Links showed on the footer
 #
 links :
-  Yitao's Blog : http://simpleyyt.github.io/
+  Yitao's Blog : http://flight2006.github.io/
 
 # The search engine. Only support google custom search engine.
 #
@@ -95,7 +95,7 @@ JB :
   #   - Only the following values are falsy: ["", null, false]
   #   - When setting BASE_PATH it must be a valid url.
   #     This means always setting the protocol (http|https) or prefixing with "/"
-  BASE_PATH : /jekyll-demo
+  # BASE_PATH : /jekyll-demo
 
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
