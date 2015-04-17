@@ -140,5 +140,5 @@ public class TestForumService(String[] args){
 上面结果显示代理类的名字是cn.hdu.proxy.ForumServiceImpl$$EnhancerByCGLIB$$44025b6d，这个类就是CGlib为ForumServiceImpl动态创建的子类。
 
 #总结
-动态代理实质上就是使用代理对象对被包装对象请求进行'拦截''增强'，然后用代理再转发给这些被包装对象，AOP就是基于该思想为目标Bean织入横切逻辑。Spring AOP通过Pointcut(切点)指定哪些类的哪些方法上织入横切逻辑，通过Advice(增强)描述横切逻辑和方法的具体植入点(方法前、方法后、方法的两端等)。此外，Spring通过Advisor(切面)将Pointcut和Advice两者组装起来。有了Advisor的信息，Spring就可以利用JDK或CGLib的动态代理技术采用同意的方式为目标Bean创建织入切面的代理对象了。
+动态代理实质上就是使用代理对象对被包装对象请求进行`拦截``增强`，然后用代理再转发给这些被包装对象，AOP就是基于该思想为目标Bean织入横切逻辑。Spring AOP通过Pointcut(切点)指定哪些类的哪些方法上织入横切逻辑，通过Advice(增强)描述横切逻辑和方法的具体植入点(方法前、方法后、方法的两端等)。此外，Spring通过Advisor(切面)将Pointcut和Advice两者组装起来。有了Advisor的信息，Spring就可以利用JDK或CGLib的动态代理技术采用同意的方式为目标Bean创建织入切面的代理对象了。
 
