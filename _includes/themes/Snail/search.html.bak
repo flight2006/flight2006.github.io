@@ -1,6 +1,7 @@
 <script>
   (function() {
-    var cx = '{{ site.search.gcse.cx }}';
+  //  var cx = '{{ site.search.gcse.cx }}';
+	var cx = '008814119901904627567:lofj0wx4we4';
     var gcse = document.createElement('script');
     gcse.type = 'text/javascript';
     gcse.async = true;
