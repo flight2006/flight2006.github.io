@@ -1,7 +1,8 @@
 <script>
   (function() {
-  //  var cx = '{{ site.search.gcse.cx }}';  008814119901904627567:lofj0wx4we4
-	var cx = '004255214185073801838:_icnlls8kds';
+	var cx = '{{ site.search.gcse.cx }}';  
+  //008814119901904627567:lofj0wx4we4
+	//var cx = '004255214185073801838:_icnlls8kds';
     var gcse = document.createElement('script');
     gcse.type = 'text/javascript';
     gcse.async = true;
