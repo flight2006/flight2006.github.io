@@ -69,6 +69,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 	}
 
 两个方法测试结果为
+
 	---------
 	methodupdate
 	抛出异常： 数据更新异常
@@ -80,6 +81,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 
 #切点类型
 主要有
+
 `静态方法切点`:静态方法切点的抽象基类，默认匹配所有的类	 org.springfranmework.aop.support.StaticMethodMacherPointcut
 
 `动态方法切点`:动态方法切点的抽象基类，默认匹配所有的类	 org.springfranmework.aop.support.DynamicMethodMacherPointcut
