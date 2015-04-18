@@ -105,6 +105,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 ###静态普通方法名匹配切面
 
 静态普通方法名匹配切面StaticMethodMatcherPointcutAdvisor，Advisor通过类过滤和方法名匹配定义切点。切面一般定义形式为：
+
 	public class XxxAdvisor extends StaticMethodMatcherPointcutAdvisor{
 	public boolean matches(Method method,Class clazz){
 			return "xxxName".equals(method.getName());//切点方法匹配股则：方法名为xxxName
