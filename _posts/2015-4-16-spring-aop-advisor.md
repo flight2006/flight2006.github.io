@@ -80,6 +80,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 	成功回滚事务。
 
 #切点类型
+
 主要有
 
 `静态方法切点`:静态方法切点的抽象基类，默认匹配所有的类	 org.springfranmework.aop.support.StaticMethodMacherPointcut
@@ -96,12 +97,15 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 
 #切面类型
 切面类型分为一般切面(Advisor)，仅包含一个Advice
-带切点切面（Pointcut Advisor）,包含Advice和Pointcut两个类
+切点切面（Pointcut Advisor）,包含Advice和Pointcut两个类
 引介切面(IntroductionAdvisor),对应引介增强的特殊切面，应用于类层面，使用ClassFilter进行定义
 
 ##切点切面
+
 ###静态普通方法名匹配切面
+
 静态普通方法名匹配切面StaticMethodMatcherPointcutAdvisor，Advisor通过类过滤和方法名匹配定义切点。切面一般定义形式为：
+
 	public class XxxAdvisor extends StaticMethodMatcherPointcutAdvisor{
 	public boolean matches(Method method,Class clazz){
 			return "xxxName".equals(method.getName());//切点方法匹配股则：方法名为xxxName
@@ -120,6 +124,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 
 ###动态切面
 上面的静态切面对类和方法名进行过滤/限定，那么动态切面限定了什么呢？我的理解就是动态切面对指定类的指定方法的调用者或者类的实例化对象进行了限定。增强形式如下：
+
 	public class XxxAdvisor extends DynamicMethodMatcherPointcutAdvisor｛
 		public static List<String> specialClientList = new ArrayList<String>();   //指定对象集合
 		//可以加入指定对象
