@@ -12,6 +12,7 @@ tags: spring aop
 Spring提供4种类型的方法增强，分别是前置增强、后置增强、环绕增强和异常抛出增强，此外还有一种特殊的引介增强，引介增强是类级别的，它为目标类织入新的接口实现。
 ##异常抛出增强
 前三个异常见名知义，异常抛出增强最合适的应用场景就是事务管理，当参与事务的某个Dao发出异常时，事务管理器就必须回滚事务。下面业务代码模拟异常抛出：
+
 	import java.sql.SQLException;
 
 	public class ForumService {
@@ -41,6 +42,7 @@ Spring提供4种类型的方法增强，分别是前置增强、后置增强、�
 
 ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标识接口，运行期Spring使用反射机制自行判断，必须使用代码中的方法和参数形式，其中前三个可选，同时提供或者不提供，最后一个参数必须是Throwable及其子类。
 配置代码：
+
 	<bean id="transactionManager" class="cn.hdu.advisor.TransactionManager"/>
 	<bean id="forumServiceTarget" class="cn.hdu.advisor.ForumService"/>
 	<bean id="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
@@ -50,8 +52,8 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 	/>
 
 测试：
-	import java.sql.SQLException;
 
+	import java.sql.SQLException;
 	import org.springframework.context.ApplicationContext;
 	import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -69,6 +71,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 	}
 
 两个方法测试结果为
+
 	---------
 	methodupdate
 	抛出异常： 数据更新异常
@@ -81,10 +84,15 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 #切点类型
 主要有
 `静态方法切点`:静态方法切点的抽象基类，默认匹配所有的类	 org.springfranmework.aop.support.StaticMethodMacherPointcut
+
 `动态方法切点`:动态方法切点的抽象基类，默认匹配所有的类	 org.springfranmework.aop.support.DynamicMethodMacherPointcut
+
 `注解切点`:支持通过JDK5.0注解标签定义的切点  org.springfranmework.aop.support.annotation.AnnotationMachingPointcut
+
 `表达式切点`:支持AspectJ切点表达式	 org.springfranmework.aop.support.ExpressionPointcut
+
 `流程切点`:根据程序执行堆栈的信息查看目标方法是否由某一个方法直接或间接发起调用，以此判断是否为匹配的连接点。	 org.springfranmework.aop.support.ControlFlowPointcut
+
 `复合切点`:支持创建多个切点	  org.springfranmework.aop.support.ComposablePointcut
 
 #切面类型
@@ -93,7 +101,9 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 引介切面(IntroductionAdvisor),对应引介增强的特殊切面，应用于类层面，使用ClassFilter进行定义
 
 ##切点切面
+
 ###静态普通方法名匹配切面
+
 静态普通方法名匹配切面StaticMethodMatcherPointcutAdvisor，Advisor通过类过滤和方法名匹配定义切点。切面一般定义形式为：
 	public class XxxAdvisor extends StaticMethodMatcherPointcutAdvisor{
 	public boolean matches(Method method,Class clazz){
@@ -113,6 +123,7 @@ ThrowsAdivce异常抛出增强接口没有定义任何方法，只是一个标�
 
 ###动态切面
 上面的静态切面对类和方法名进行过滤/限定，那么动态切面限定了什么呢？我的理解就是动态切面对指定类的指定方法的调用者或者类的实例化对象进行了限定。增强形式如下：
+
 	public class XxxAdvisor extends DynamicMethodMatcherPointcutAdvisor｛
 		public static List<String> specialClientList = new ArrayList<String>();   //指定对象集合
 		//可以加入指定对象
