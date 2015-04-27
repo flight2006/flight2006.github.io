@@ -135,6 +135,7 @@ refresh()的基本步骤为:
  
  refresh()方法初始化容器的过程可以用下图解释:
  ![](http://dl.iteye.com/upload/attachment/558068/2187e288-5c0b-313b-8053-82992267fab6.jpg)
+
 ##5.BeanFactory
 
 用来定义一个很纯粹的 bean 容器。它是一个 bean 容器的必备结构。同时和外部应用环境等隔离。 BeanDefinition 是它的基本数据结构。它维护一个 BeanDefinitions Map, 并可根据 BeanDefinition 的描述进行 bean 的创建和管理。
