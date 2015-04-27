@@ -1,7 +1,7 @@
 ---
 layout: post
 category: spring
-title: spring学习笔记之IOC原理
+title: spring学习笔记之IoC原理
 tagline: by flight
 tags: spring IoC
 ---
