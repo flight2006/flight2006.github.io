@@ -83,7 +83,7 @@ tags: spring data access
 　　
 #Spring异常体系
 　　庆幸的是Spring已经提供了异常访问体系。Srping在org.springframework.dao包中提供了一套完备优雅的DAO异常体系，这些异常继承于DataAccessException,而DataAccessException又继承与Nested Runtime Exception,Nested Runtime Exception异常以嵌套的方式封装了源异常。
-![](http://static.oschina.net/uploads/space/2012/0104/143755_nIjs_218421.jpg)
+![](http://i.imgur.com/1um6FRHs.jpg)
 
 可以看到Spring DAO异常体系非常丰富，上图列出了DataAccessException异常类下的子类。下表对这些异常进行了简单的描述:
 ![](http://i.imgur.com/vqlnbFg.png)
