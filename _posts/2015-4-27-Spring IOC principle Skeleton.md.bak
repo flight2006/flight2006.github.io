@@ -24,7 +24,6 @@ Spring另外一个核心工具便是IoC容器，本篇主要理清IoC源码的�
     BeanDefinitionReader
     BeanFactory
     ApplicationContext
-
 以上五个都是接口，都有各式各样的实现，正是这 5 个接口定义了 spring ioc 容器的基本代码组件结构。而其组件各种实现的组合关系组成了一个运行时的具体容器。
 #各组件详解
 ##1.resource
