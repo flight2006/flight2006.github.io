@@ -26,6 +26,7 @@ Spring另外一个核心工具便是IoC容器，本篇主要理清IoC源码的�
     ApplicationContext
 
 以上五个都是接口，都有各式各样的实现，正是这 5 个接口定义了 spring ioc 容器的基本代码组件结构。而其组件各种实现的组合关系组成了一个运行时的具体容器。
+
 #各组件详解
 ##1.resource
 是对资源的抽象，每一个接口实现类都代表了一种资源类型，如 ClasspathResource 、 URLResource ， FileSystemResource 等。每一个资源类型都封装了对某一种特定资源的访问策略。它是 spring 资源访问策略的一个基础实现，应用在很多场景。
@@ -52,9 +53,11 @@ BeanDefinitionReader 将外部资源对象描述的 bean 定义统一转化为�
 ![](http://dl.iteye.com/upload/attachment/536183/c456f949-7b9c-34db-ad1a-ca3141219b6d.jpg)
 
 AbstractApplicationContext是ApplicationContext的抽象实现类，该抽象类的`refresh()`方法定义了Spring容器在加载配置文件后的各项处理过程，这些处理过程清晰刻画了Spring容器启动时的各项操作。
-refresh()的基本步骤为:
+refresh()的基本步骤为: 
  - 1.把配置xml文件转换成resource。resource的转换是先通过ResourcePatternResolver来解析可识别格式的配置文件的路径(如"classpath*:"等)，如果没有指定格式，默认会按照类路径的资源来处理。 
+ 
  - 2.利用XmlBeanDefinitionReader完成对xml的解析，将xml Resource里定义的bean对象转换成统一的BeanDefinition。
+ 
  - 3.将BeanDefinition注册到BeanFactory，完成对BeanFactory的初始化。BeanFactory里将会维护一个BeanDefinition的Map。
     
 
